@@ -342,3 +342,13 @@ function loadOrders() {
     });
 }
 
+window.logoutDriver = function() {
+  localStorage.removeItem('fastgo_driver_profile');
+  driverProfile = null;
+  showAlert("Sesión cerrada", "success");
+  goSection('profile');
+  document.getElementById('driverName').value = "";
+  document.getElementById('driverContact').value = "";
+  document.getElementById('orders-list').innerHTML = '';
+};
+document.getElementById('logoutBtn').onclick = logoutDriver;
