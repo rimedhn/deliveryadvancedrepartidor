@@ -348,3 +348,88 @@ footer {
 #driver-profile-form button {
   margin: 0;
 }
+
+#profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh; /* Centrado vertical */
+}
+
+#driver-profile-form {
+  background: #fff;
+  padding: 32px 28px;
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(60,60,60,0.10);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 320px;
+  max-width: 350px;
+}
+
+#driver-profile-form label {
+  font-weight: 500;
+  color: #2d3a4a;
+  margin-bottom: 6px;
+  display: block;
+}
+
+#driver-profile-form input[type="text"] {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid #d0d2d6;
+  border-radius: 6px;
+  font-size: 1em;
+  margin-top: 4px;
+}
+
+#driver-profile-form .btn-action,
+#driver-profile-form .btn-logout {
+  margin-top: 14px;
+  margin-bottom: 0;
+}
+
+#driver-profile-form .btn-action {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background .18s;
+}
+
+#driver-profile-form .btn-action:hover {
+  background: #1256a2;
+}
+
+#driver-profile-form .btn-logout {
+  background: #fff;
+  color: #b00;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background .18s;
+}
+
+#driver-profile-form .btn-logout:hover {
+  background: #fbeaea;
+}
+
+#profileSavedMsg {
+  margin-top: 12px;
+  color: #219d53;
+  text-align: center;
+  font-weight: 500;
+}
+
+@media (max-width: 500px) {
+  #driver-profile-form {
+    min-width: 90vw;
+    padding: 18px 6vw;
+  }
+}
