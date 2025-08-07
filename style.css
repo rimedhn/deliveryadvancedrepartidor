@@ -294,3 +294,26 @@ footer {
   from {opacity: 0; transform: translateY(16px);}
   to {opacity: 1; transform: none;}
 }
+
+.whatsapp-float {
+  position: fixed;
+  bottom: 140px;
+  right: 19px;
+  background: #25d366;
+  color: #fff;
+  border-radius: 50%;
+  width: 56px; height: 56px;
+  display: flex;
+  align-items: center; justify-content: center;
+  font-size: 2.2em;
+  box-shadow: 0 4px 14px rgba(76,175,80,0.14);
+  z-index: 120;
+  transition: background .17s;
+  text-decoration: none !important;
+}
+.whatsapp-float:hover { background: #43a047; color: #fff; }
+@media (min-width: 900px) {
+  .whatsapp-float {
+    bottom: 80px;
+  }
+}
