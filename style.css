@@ -332,3 +332,19 @@ footer {
 }
 .btn-logout i { margin-right: 5px; }
 .btn-logout:hover { background: #fbeaea; }
+
+#driver-profile-form {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#driver-profile-form label {
+  flex-basis: 100%;
+}
+
+#driver-profile-form button {
+  margin: 0;
+}
