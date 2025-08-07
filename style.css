@@ -350,10 +350,15 @@ footer {
 }
 
 #profile {
+  width: 100vw;
+  min-height: 70vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 60vh; /* Centrado vertical */
+  padding-top: 30px;
+  padding-bottom: 30px;
+  box-sizing: border-box;
 }
 
 #driver-profile-form {
