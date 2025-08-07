@@ -322,3 +322,23 @@ window.onload = function() {
   if(!driverProfile) goSection('profile');
   else { goSection('orders'); loadOrders(); }
 };
+
+function loadOrders() {
+  const list = document.getElementById('orders-list');
+  // NUEVO BLOQUE: Verifica si hay perfil registrado
+  if (!driverProfile) {
+    list.innerHTML = `<div class="loading" style="color:#b00;font-weight:bold;font-size:1.1em;">
+      Debes registrar tu perfil para ver los pedidos.<br>
+      <button class="btn-action" onclick="goSection('profile')">Ir a registro</button>
+    </div>`;
+    return;
+  }
+  list.innerHTML = `<div class="loading">Cargando pedidos...</div>`;
+  fetch(ORDER_SHEET_URL)
+    .then(r=>r.text())
+    .then(csv=>{
+      orders = parseCSV(csv);
+      renderOrders();
+    });
+}
+
