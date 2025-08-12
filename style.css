@@ -338,15 +338,16 @@ footer {
 }
 
 #driver-profile-form {
-  background: #fff;
-  padding: 32px 28px;
-  border-radius: 14px;
-  box-shadow: 0 4px 18px rgba(60,60,60,0.10);
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  min-width: 320px;
-  max-width: 350px;
+    background: #fff;
+    padding: 32px 28px;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(60,60,60,0.10);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 320px;
+    max-width: 350px;
+    margin: 0 auto; /* Agrega esta línea para centrar el formulario */
 }
 
 #driver-profile-form label {
