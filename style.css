@@ -423,10 +423,10 @@ footer {
 
 @media (max-width: 899px) {
   #driver-profile-form {
-    min-width: 90vw;
-    max-width: 98vw;
+    max-width: 400px; /* Nuevo valor para el ancho máximo del formulario */
+    width: 90%; /* Ancho del formulario, 90% del contenedor padre */
     padding: 18px 4vw;
-    margin: 0 auto; /* Aseguramos el centrado */
+    margin: 0 auto;
   }
   #profile {
     padding-top: 18px;
