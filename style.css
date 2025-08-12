@@ -285,11 +285,7 @@ footer {
   text-align: center;
   padding: 12px 0;
 }
-@media (min-width:900px) {
-  main { padding-top: 74px; padding-bottom: 0; min-height: calc(100vh - 68px - 66px);}
-  .section { max-width: 900px; padding: 32px 30px 30px 30px; }
-  .orders-list { gap: 24px;}
-}
+
 @keyframes fadeIn {
   from {opacity: 0; transform: translateY(16px);}
   to {opacity: 1; transform: none;}
@@ -312,11 +308,6 @@ footer {
   text-decoration: none !important;
 }
 .whatsapp-float:hover { background: #43a047; color: #fff; }
-@media (min-width: 900px) {
-  .whatsapp-float {
-    bottom: 80px;
-  }
-}
 
 #profile {
   width: 100vw;
@@ -421,13 +412,41 @@ footer {
   font-size: 1.08em;
 }
 
+@media (min-width: 900px) {
+  main { 
+    padding-top: 74px; 
+    padding-bottom: 0; 
+    min-height: calc(100vh - 68px - 66px);
+  }
+  
+  .section { 
+    max-width: 900px; 
+    padding: 32px 30px 30px 30px; 
+  }
+  
+  .orders-list { 
+    gap: 24px;
+  }
+  
+  .whatsapp-float {
+    bottom: 80px;
+  }
+}
+
 @media (max-width: 899px) {
+  .section {
+    max-width: 90vw;
+    margin: 0 auto;
+    padding: 22px 14px;
+  }
+  
   #driver-profile-form {
-    max-width: 400px; /* Nuevo valor para el ancho máximo del formulario */
-    width: 90%; /* Ancho del formulario, 90% del contenedor padre */
+    max-width: 400px;
+    width: 90%;
     padding: 18px 4vw;
     margin: 0 auto;
   }
+  
   #profile {
     padding-top: 18px;
     padding-bottom: 18px;
