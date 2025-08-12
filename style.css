@@ -421,11 +421,12 @@ footer {
   font-size: 1.08em;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 899px) {
   #driver-profile-form {
     min-width: 90vw;
     max-width: 98vw;
     padding: 18px 4vw;
+    margin: 0 auto; /* Aseguramos el centrado */
   }
   #profile {
     padding-top: 18px;
