@@ -318,40 +318,23 @@ footer {
   }
 }
 
-.btn-logout {
-  background: #fff;
-  color: #b00;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 10px 14px;
-  margin: 10px 0 0 0;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background .18s;
-  vertical-align: middle;
-}
-.btn-logout i { margin-right: 5px; }
-.btn-logout:hover { background: #fbeaea; }
-
-
-#driver-profile-form label {
-  flex-basis: 100%;
-}
-
-#driver-profile-form button {
-  margin: 0;
-}
-
 #profile {
   width: 100vw;
-  min-height: 70vh;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 40px;
+  padding-bottom: 40px;
   box-sizing: border-box;
+}
+
+#profile h2 {
+  color: #217a35;
+  margin-bottom: 28px;
+  text-align: center;
+  font-size: 2em;
 }
 
 #driver-profile-form {
@@ -371,6 +354,7 @@ footer {
   color: #2d3a4a;
   margin-bottom: 6px;
   display: block;
+  font-size: 1.07em;
 }
 
 #driver-profile-form input[type="text"] {
@@ -380,15 +364,18 @@ footer {
   border-radius: 6px;
   font-size: 1em;
   margin-top: 4px;
+  background: #f7fff7;
+  box-sizing: border-box;
 }
 
-#driver-profile-form .btn-action,
-#driver-profile-form .btn-logout {
-  margin-top: 14px;
-  margin-bottom: 0;
+.profile-buttons {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  margin-top: 10px;
 }
 
-#driver-profile-form .btn-action {
+.btn-action {
   background: #1976d2;
   color: #fff;
   border: none;
@@ -397,13 +384,17 @@ footer {
   font-weight: bold;
   cursor: pointer;
   transition: background .18s;
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+  gap: 7px;
 }
 
-#driver-profile-form .btn-action:hover {
+.btn-action:hover {
   background: #1256a2;
 }
 
-#driver-profile-form .btn-logout {
+.btn-logout {
   background: #fff;
   color: #b00;
   border: 1px solid #e0e0e0;
@@ -412,22 +403,31 @@ footer {
   font-weight: bold;
   cursor: pointer;
   transition: background .18s;
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+  gap: 7px;
 }
 
-#driver-profile-form .btn-logout:hover {
-  background: #fbeaea;
-}
+.btn-logout i { margin-right: 5px; }
+.btn-logout:hover { background: #fbeaea; }
 
 #profileSavedMsg {
-  margin-top: 12px;
+  margin-top: 18px;
   color: #219d53;
   text-align: center;
   font-weight: 500;
+  font-size: 1.08em;
 }
 
 @media (max-width: 500px) {
   #driver-profile-form {
     min-width: 90vw;
-    padding: 18px 6vw;
+    max-width: 98vw;
+    padding: 18px 4vw;
+  }
+  #profile {
+    padding-top: 18px;
+    padding-bottom: 18px;
   }
 }
