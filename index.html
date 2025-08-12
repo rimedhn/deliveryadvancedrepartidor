@@ -31,19 +31,19 @@
     </section>
 <section id="profile">
   <h2>Tu perfil</h2>
-  <form id="driver-profile-form">
-    <label>Nombre:<br>
+  <form id="driver-profile-form" autocomplete="off">
+    <label for="driverName">Nombre:
       <input type="text" id="driverName" required>
-    </label><br>
-    <label>Contacto (teléfono o email):<br>
+    </label>
+    <label for="driverContact">Contacto (teléfono o email):
       <input type="text" id="driverContact" required>
-    </label><br>
-<div style="display: flex; gap: 14px; justify-content: center;">
-  <button type="submit" class="btn-action">Guardar registro</button>
-  <button type="button" id="logoutBtn" class="btn-logout">
-    <i class="fas fa-sign-out-alt"></i> Cerrar sesión
-  </button>
-</div>
+    </label>
+    <div class="profile-buttons">
+      <button type="submit" class="btn-action">Guardar registro</button>
+      <button type="button" id="logoutBtn" class="btn-logout">
+        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+      </button>
+    </div>
   </form>
   <div id="profileSavedMsg"></div>
 </section>
