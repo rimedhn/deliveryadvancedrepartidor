@@ -15,15 +15,16 @@
     <span class="business-name">FastGo Repartidores</span>
     <nav class="main-menu">
       <button data-section="orders"><i class="fas fa-list"></i> Pedidos</button>
-      <button data-section="profile"><i class="fas fa-user"></i> Mi Perfil</button>
-      <button data-section="client"><i class="fas fa-users"></i> Registro Cliente</button>
-      <button data-section="about"><i class="fas fa-info-circle"></i> Sobre app</button>
+      <button data-section="profile"><i class="fas fa-user"></i> Perfil</button>
+      <button data-section="login"><i class="fas fa-sign-in-alt"></i> Ingresar</button>
+      <button data-section="register"><i class="fas fa-user-plus"></i> Registro</button>
       <button onclick="logoutDriver()"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</button>
+      <button data-section="about"><i class="fas fa-info-circle"></i> Sobre app</button>
     </nav>
   </header>
   <div id="customAlert" class="custom-alert"></div>
   <main>
-    <section id="orders" class="section active" style="display:block;">
+    <section id="orders" class="section" style="display:none;">
       <h1><i class="fas fa-list"></i> Pedidos Disponibles</h1>
       <div class="orders-list" id="orders-list">
         <div class="loading">Cargando pedidos...</div>
@@ -36,43 +37,13 @@
       </div>
       <div id="order-details-content"></div>
     </section>
-    <section id="profile" class="section" style="display:none;">
-      <h2>Registro Repartidor</h2>
-      <form id="driver-profile-form" autocomplete="off">
-        <label for="driverName">Nombre:
-          <input type="text" id="driverName" required>
-        </label>
-        <label for="driverContact">Contacto (teléfono o email):
-          <input type="text" id="driverContact" required>
-        </label>
-        <div class="profile-buttons">
-          <button type="submit" class="btn-action">Guardar registro</button>
-          <button type="button" id="logoutBtn" class="btn-logout">
-            <i class="fas fa-sign-out-alt"></i> Cerrar sesión
-          </button>
-        </div>
-      </form>
-      <div id="profileSavedMsg"></div>
-    </section>
-    <section id="client" class="section" style="display:none;">
-      <h2>Registro Cliente</h2>
-      <form id="client-profile-form" autocomplete="off">
-        <label for="clientName">Nombre:
-          <input type="text" id="clientName" required>
-        </label>
-        <label for="clientContact">Contacto (teléfono o email):
-          <input type="text" id="clientContact" required>
-        </label>
-        <div class="profile-buttons">
-          <button type="submit" class="btn-action">Guardar registro</button>
-        </div>
-      </form>
-      <div id="clientSavedMsg"></div>
-    </section>
+    <section id="profile" class="section" style="display:none;"></section>
+    <section id="login" class="section" style="display:none;"></section>
+    <section id="register" class="section" style="display:none;"></section>
     <section id="about" class="section" style="display:none;">
       <h2><i class="fas fa-info-circle"></i> Sobre esta app</h2>
       <p>
-        Esta interfaz está diseñada para repartidores y clientes de FastGo.<br>
+        Esta interfaz está diseñada para repartidores de FastGo.<br>
         Aquí puedes ver los pedidos en tiempo real, aceptar y gestionar pedidos, y actualizar el estado a cada paso.<br>
         <b>¡Gracias por tu servicio!</b>
       </p>
