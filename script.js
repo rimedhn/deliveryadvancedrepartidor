@@ -1,5 +1,5 @@
 // CONFIGURACIÓN
-const WEB_APP_URL = 'TU_WEB_APP_URL'; // <-- Pon tu URL de Apps Script aquí
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxzJIehAXgQyZkSwhaZYzZLO3zxkXaZZxLViLLRIuJFITvEAQ4lSpiZXYwdl74DzZls3Q/exec'; // <-- Pon tu URL de Apps Script aquí
 
 const STATUS_LIST = [
   "Creado", "En proceso", "En camino", "En el destino", "Entregado", "Finalizado", "Cancelado", "Cliente no encontrado"
