@@ -1,5 +1,5 @@
 // CONFIGURACIÓN
-const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxzJIehAXgQyZkSwhaZYzZLO3zxkXaZZxLViLLRIuJFITvEAQ4lSpiZXYwdl74DzZls3Q/exec';
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbw48uHYNxrv_p-6i8yTrcgs2sFEnngyhiwwdYH925md9eZXZLeXT3bSZkWytjsHzgmWNg/exec';
 
 const STATUS_LIST = [
   "Creado", "En proceso", "En camino", "En el destino", "Entregado", "Finalizado", "Cancelado", "Cliente no encontrado"
