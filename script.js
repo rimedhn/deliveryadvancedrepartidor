@@ -222,6 +222,8 @@ function showOrderDetails(orderId) {
 
 function renderOrderDetails() {
   const d = selectedOrder;
+  // Fix robusto: asegúrate que telefono_cliente es string
+  let telefono = (d.telefono_cliente !== undefined && d.telefono_cliente !== null) ? String(d.telefono_cliente) : '';
   let stepsHtml = STATUS_LIST.map((st,i)=>{
     let cls = '';
     if (statusIndex(d.estado) > i) cls = 'done';
@@ -233,9 +235,9 @@ function renderOrderDetails() {
     <ul class="order-data-list">
       <li><strong>Servicio:</strong> ${d.servicio}</li>
       <li><strong>Cliente:</strong> ${d.nombre_cliente}</li>
-      <li><strong>Teléfono:</strong> ${d.telefono_cliente} 
-        <a href="tel:${d.telefono_cliente}" class="btn-action secondary" title="Llamar al cliente" style="padding:4px 10px;margin-left:8px;"><i class="fas fa-phone"></i></a>
-        <a href="https://wa.me/${d.telefono_cliente.replace(/\D/g,'')}" class="btn-action secondary" title="WhatsApp al cliente" target="_blank" style="padding:4px 10px;margin-left:4px;"><i class="fab fa-whatsapp"></i></a>
+      <li><strong>Teléfono:</strong> ${telefono} 
+        <a href="tel:${telefono}" class="btn-action secondary" title="Llamar al cliente" style="padding:4px 10px;margin-left:8px;" ${telefono.length === 0 ? 'style="pointer-events:none;opacity:0.5;"' : ''}><i class="fas fa-phone"></i></a>
+        <a href="https://wa.me/${telefono.replace(/\D/g,'')}" class="btn-action secondary" title="WhatsApp al cliente" target="_blank" style="padding:4px 10px;margin-left:4px;${telefono.length === 0 ? 'pointer-events:none;opacity:0.5;' : ''}"><i class="fab fa-whatsapp"></i></a>
       </li>
       <li><strong>Origen:</strong> ${d.origen}</li>
       <li><strong>Destino:</strong> ${d.destino}</li>
@@ -272,9 +274,9 @@ function renderStatusSelect(d) {
 function renderMapRoute(order) {
   let mapDiv = document.getElementById('orderRouteMap');
   mapDiv.innerHTML = "";
-  let coordsOrigin = order.cords_origen ? order.cords_origen.split(',').map(Number) : null;
-  let coordsDest = order.cords_destino ? order.cords_destino.split(',').map(Number) : null;
-  if(!coordsOrigin || !coordsDest) {
+  let coordsOrigin = order.cords_origen ? String(order.cords_origen).split(',').map(Number) : null;
+  let coordsDest = order.cords_destino ? String(order.cords_destino).split(',').map(Number) : null;
+  if(!coordsOrigin || !coordsDest || isNaN(coordsOrigin[0]) || isNaN(coordsDest[0])) {
     mapDiv.innerHTML = `<div style="padding:20px;color:#888;">No hay datos de ubicación para este pedido.</div>`;
     return;
   }
