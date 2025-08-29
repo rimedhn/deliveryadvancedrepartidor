@@ -1,5 +1,5 @@
 // CONFIGURACIÓN
-const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxzJIehAXgQyZkSwhaZYzZLO3zxkXaZZxLViLLRIuJFITvEAQ4lSpiZXYwdl74DzZls3Q/exec'; // <-- Pon tu URL de Apps Script aquí
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxzJIehAXgQyZkSwhaZYzZLO3zxkXaZZxLViLLRIuJFITvEAQ4lSpiZXYwdl74DzZls3Q/exec'; // <- Reemplaza por tu Web App URL
 
 const STATUS_LIST = [
   "Creado", "En proceso", "En camino", "En el destino", "Entregado", "Finalizado", "Cancelado", "Cliente no encontrado"
@@ -96,27 +96,20 @@ function registrarUsuario(e) {
     showAlert("Completa todos los datos", "error");
     return;
   }
-  fetch(WEB_APP_URL, {
-    method: "POST",
-    body: JSON.stringify({
-      accion: "registro_usuario",
-      nombre,
-      usuario,
-      clave
-    }),
-    headers: {"Content-Type":"application/json"}
-  })
-  .then(r => r.json())
-  .then(res => {
-    if (res.ok) {
-      showAlert(res.msg, "success");
-      goSection('login');
-    } else {
-      document.getElementById('registerMsg').textContent = res.msg;
-      showAlert(res.msg, "error");
-    }
-  })
-  .catch(() => showAlert("Error de conexión", "error"));
+  // USAMOS GET para evitar problemas de CORS
+  const url = `${WEB_APP_URL}?accion=registro_usuario&nombre=${encodeURIComponent(nombre)}&usuario=${encodeURIComponent(usuario)}&clave=${encodeURIComponent(clave)}`;
+  fetch(url)
+    .then(r => r.json())
+    .then(res => {
+      if (res.ok) {
+        showAlert(res.msg, "success");
+        goSection('login');
+      } else {
+        document.getElementById('registerMsg').textContent = res.msg;
+        showAlert(res.msg, "error");
+      }
+    })
+    .catch(() => showAlert("Error de conexión", "error"));
 }
 
 function loginUsuario(e) {
@@ -127,33 +120,27 @@ function loginUsuario(e) {
     showAlert("Completa usuario y clave", "error");
     return;
   }
-  fetch(WEB_APP_URL, {
-    method: "POST",
-    body: JSON.stringify({
-      accion: "login_usuario",
-      usuario,
-      clave
-    }),
-    headers: {"Content-Type":"application/json"}
-  })
-  .then(r => r.json())
-  .then(res => {
-    if (res.ok) {
-      usuarioActual = {
-        nombre: res.nombre,
-        usuario: res.usuario,
-        tipo: res.tipo
-      };
-      localStorage.setItem('fastgo_usuario', JSON.stringify(usuarioActual));
-      showAlert("Bienvenido " + res.nombre, "success");
-      goSection('orders');
-      loadOrders();
-    } else {
-      document.getElementById('loginMsg').textContent = res.msg;
-      showAlert(res.msg, "error");
-    }
-  })
-  .catch(() => showAlert("Error de conexión", "error"));
+  // USAMOS GET para evitar problemas de CORS
+  const url = `${WEB_APP_URL}?accion=login_usuario&usuario=${encodeURIComponent(usuario)}&clave=${encodeURIComponent(clave)}`;
+  fetch(url)
+    .then(r => r.json())
+    .then(res => {
+      if (res.ok) {
+        usuarioActual = {
+          nombre: res.nombre,
+          usuario: res.usuario,
+          tipo: res.tipo
+        };
+        localStorage.setItem('fastgo_usuario', JSON.stringify(usuarioActual));
+        showAlert("Bienvenido " + res.nombre, "success");
+        goSection('orders');
+        loadOrders();
+      } else {
+        document.getElementById('loginMsg').textContent = res.msg;
+        showAlert(res.msg, "error");
+      }
+    })
+    .catch(() => showAlert("Error de conexión", "error"));
 }
 
 function checkLogin() {
@@ -185,11 +172,7 @@ function loadOrders() {
     return;
   }
   list.innerHTML = `<div class="loading">Cargando pedidos...</div>`;
-  fetch(WEB_APP_URL, {
-    method: "POST",
-    body: JSON.stringify({accion: "listar_pedidos"}),
-    headers: {"Content-Type":"application/json"}
-  })
+  fetch(WEB_APP_URL + "?accion=listar_pedidos")
     .then(r=>r.json())
     .then(data=>{
       if (!data.ok || !data.pedidos) {
@@ -263,9 +246,27 @@ function renderOrderDetails() {
       <li><strong>Repartidor:</strong> ${d.driver_name ? d.driver_name : '<span style="color:#888">Sin asignar</span>'}</li>
     </ul>
     <div class="map-container"><div id="orderRouteMap"></div></div>
+    <div class="btn-group" style="margin-top:10px;">
+      ${canTakeOrder(d) ? `<button class="btn-action" onclick="takeOrder('${d.id_pedido}')"><i class="fas fa-motorcycle"></i> Tomar pedido</button>` : ""}
+      ${canUpdateStatus(d) ? renderStatusSelect(d) : ""}
+    </div>
   `;
   document.getElementById('order-details-content').innerHTML = details;
   setTimeout(()=>renderMapRoute(d),200);
+}
+
+function renderStatusSelect(d) {
+  let idx = statusIndex(d.estado);
+  let options = STATUS_LIST.map((st,i)=>{
+    if(i<idx) return ""; // solo estados siguientes
+    return `<option value="${st}"${st===d.estado?' selected':''}>${st}</option>`;
+  }).join('');
+  return `
+    <select class="order-status-select" id="statusSelect_${d.id_pedido}">
+      ${options}
+    </select>
+    <button class="btn-action" onclick="updateOrderStatus('${d.id_pedido}')"><i class="fas fa-sync"></i> Cambiar estado</button>
+  `;
 }
 
 function renderMapRoute(order) {
@@ -283,6 +284,46 @@ function renderMapRoute(order) {
   L.marker(coordsDest).addTo(map).bindPopup("Destino");
   L.polyline([coordsOrigin, coordsDest], {color:'#4caf50',weight:4}).addTo(map);
   setTimeout(()=>map.invalidateSize(),150);
+}
+
+// =========== ACCIONES DE PEDIDO ===========
+function canTakeOrder(order) {
+  return !order.driver_name && checkLogin();
+}
+function takeOrder(id_pedido) {
+  if (!checkLogin()) return showAlert("Debes iniciar sesión", "error");
+  const url = `${WEB_APP_URL}?accion=actualizar_pedido&id_pedido=${encodeURIComponent(id_pedido)}&driver_name=${encodeURIComponent(usuarioActual.nombre)}&driver_contact=${encodeURIComponent(usuarioActual.usuario)}`;
+  fetch(url)
+    .then(r=>r.json())
+    .then(res=>{
+      if(res.ok) {
+        showAlert("¡Pedido asignado!", "success");
+        goSection('orders');
+        loadOrders();
+      } else {
+        showAlert(res.msg||"No se pudo tomar el pedido", "error");
+      }
+    });
+}
+function canUpdateStatus(order) {
+  return order.driver_name === usuarioActual?.nombre;
+}
+function updateOrderStatus(id_pedido) {
+  const sel = document.getElementById("statusSelect_"+id_pedido);
+  if(!sel) return;
+  const estado = sel.value;
+  const url = `${WEB_APP_URL}?accion=actualizar_pedido&id_pedido=${encodeURIComponent(id_pedido)}&estado=${encodeURIComponent(estado)}`;
+  fetch(url)
+    .then(r=>r.json())
+    .then(res=>{
+      if(res.ok) {
+        showAlert("Estado actualizado", "success");
+        goSection('orders');
+        loadOrders();
+      } else {
+        showAlert(res.msg||"No se pudo cambiar el estado", "error");
+      }
+    });
 }
 
 // =========== PERFIL DE USUARIO ===========
