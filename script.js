@@ -1,10 +1,5 @@
 // CONFIGURACIÓN
-const SHEET_ID = 'TU_ID_DE_GOOGLE_SHEET'; // Reemplaza por tu ID real
-const ORDERS_SHEET = 'Pedidos';
-const ORDERS_URL = `https://opensheet.vercel.app/${SHEET_ID}/${ORDERS_SHEET}`;
-
-// Endpoint Apps Script para usuarios (registro/login)
-const USUARIOS_SCRIPT_URL = 'TU_APPS_SCRIPT_DEPLOYMENT_URL'; // Reemplaza por tu URL
+const WEB_APP_URL = 'TU_WEB_APP_URL'; // <-- Pon tu URL de Apps Script aquí
 
 const STATUS_LIST = [
   "Creado", "En proceso", "En camino", "En el destino", "Entregado", "Finalizado", "Cancelado", "Cliente no encontrado"
@@ -101,14 +96,13 @@ function registrarUsuario(e) {
     showAlert("Completa todos los datos", "error");
     return;
   }
-  fetch(USUARIOS_SCRIPT_URL, {
+  fetch(WEB_APP_URL, {
     method: "POST",
     body: JSON.stringify({
-      accion: "registro",
+      accion: "registro_usuario",
       nombre,
       usuario,
-      clave,
-      tipo: "Repartidor"
+      clave
     }),
     headers: {"Content-Type":"application/json"}
   })
@@ -133,10 +127,10 @@ function loginUsuario(e) {
     showAlert("Completa usuario y clave", "error");
     return;
   }
-  fetch(USUARIOS_SCRIPT_URL, {
+  fetch(WEB_APP_URL, {
     method: "POST",
     body: JSON.stringify({
-      accion: "login",
+      accion: "login_usuario",
       usuario,
       clave
     }),
@@ -191,10 +185,18 @@ function loadOrders() {
     return;
   }
   list.innerHTML = `<div class="loading">Cargando pedidos...</div>`;
-  fetch(ORDERS_URL)
+  fetch(WEB_APP_URL, {
+    method: "POST",
+    body: JSON.stringify({accion: "listar_pedidos"}),
+    headers: {"Content-Type":"application/json"}
+  })
     .then(r=>r.json())
     .then(data=>{
-      orders = data;
+      if (!data.ok || !data.pedidos) {
+        list.innerHTML = `<div class="loading" style="color:#b00;">Error al cargar pedidos.</div>`;
+        return;
+      }
+      orders = data.pedidos;
       renderOrders();
     });
 }
